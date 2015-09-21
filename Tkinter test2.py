@@ -4,7 +4,10 @@ from Departure_Board_HGY import *
 
 root = Tk()
 
-my_label = Label(root, text = HGY_dep_board())
-root.title("Departure Board")
+#button1 = Button(root, text = "Press the button")
+my_label = Label(root, text = "some text")
+my_label.pack()
+
+#root.title("Departure Board")
 
 root.mainloop()

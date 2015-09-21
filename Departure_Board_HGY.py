@@ -1,3 +1,4 @@
+from Tkinter import *
 from nredarwin.webservice import DarwinLdbSession
 
 # initiate a session
@@ -26,8 +27,10 @@ def HGY_dep_board():
  #Print a footer 
     print("-------------------------------------------------------------------------------")
 
+root = Tk()
+my_label = Label(root, text = HGY_dep_board())
+my_label.pack()
 
-HGY_dep_board()
-
+root.mainloop()
 
 
