@@ -1,17 +1,14 @@
 import Tkinter as tk
 from nredarwin.webservice import DarwinLdbSession
+import time
 
 
-darwin_session = DarwinLdbSession(wsdl='https://lite.realtime.nationalrail.co.uk/OpenLDBWS/wsdl.aspx?ver=2015-05-14', api_key = '6adcdf6a-2b06-40e0-8436-469c4468a679')
-
-crs_code = "HGY"
-
-board = darwin_session.get_station_board(crs_code)
-
-def cbc(id, tex):
-    return lambda : callback(id, tex)
 
 def callback():
+    darwin_session = DarwinLdbSession(wsdl='https://lite.realtime.nationalrail.co.uk/OpenLDBWS/wsdl.aspx?ver=2015-05-14', api_key = '6adcdf6a-2b06-40e0-8436-469c4468a679')
+    crs_code = "HGY"
+    board = darwin_session.get_station_board(crs_code)
+    tex.delete(1.0, tk.END)
     s = "\nNext departures for %s" % (board.location_name)
     t = """
 -------------------------------------------------------------------------------
@@ -25,19 +22,21 @@ def callback():
                  # Scroll if necessary
         tex.insert(tk.END, u)
         tex.see(tk.END)
-    v = "-------------------------------------------------------------------------------"
+    v = "-------------------------------------------------------------------------------\n"
     tex.insert(tk.END, v)
     tex.see(tk.END)
+    timey = time.asctime()
+    tex.insert(tk.END, timey)
+    
+    top.after(1000, callback)
+
 
     
 top = tk.Tk()
+top.title("Departure Board for Harringay Station")
 tex = tk.Text(master=top)
 tex.pack(side=tk.RIGHT)
 bop = tk.Frame()
 bop.pack(side=tk.LEFT)
-tv = 'Refresh'
-b = tk.Button(bop, text=tv, command=callback())
-b.pack()
-
-tk.Button(bop, text='Exit', command=top.destroy).pack()
+callback()
 top.mainloop()
